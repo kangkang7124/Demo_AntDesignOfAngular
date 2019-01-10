@@ -1,0 +1,12 @@
+git --version
+where git :windows平台查看安装路径
+
+cd到指定目录;
+git clone https://github.com/kangkang7124/Demo_AntDesignOfAngular.git
+
+
+
+
+
+
+git普通提交代码;
