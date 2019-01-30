@@ -1,0 +1,108 @@
+<div class="search">
+  <div>
+    <button nz-button [nzType]="'primary'" (click)="add()">新增</button>
+  </div>
+  <div>
+    <input type="text" nz-input placeholder="请输入搜索内容" [(ngModel)]="searchValue">
+    <button id="search" nz-button [nzType]="'primary'" (click)="search()">搜索</button>
+  </div>
+</div>
+
+<nz-table
+  #rowSelectionTable
+  [nzData]="dataSet"
+  (nzCurrentPageDataChange)="currentPageDataChange($event)">
+  <thead>
+  <tr>
+    <th>保险名称</th>
+    <th>投保人</th>
+    <th>投保日期</th>
+    <th>投保对象</th>
+    <th>到期时间</th>
+    <th>备注</th>
+    <th>操作</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of rowSelectionTable.data">
+    <td>{{data.name}}</td>
+    <td>{{data.insPerson}}</td>
+    <td>{{data.insDate | date:'yyyy-MM-dd'}}</td>
+    <td>{{data.target}}</td>
+    <td>{{data.endDate | date:'yyyy-MM-dd'}}</td>
+    <td>{{data.remarks}}</td>
+    <td>
+      <a (click)="set(data)" title="修改"><i nz-icon type="edit"></i></a>&nbsp;&nbsp;
+      <nz-popconfirm [nzTitle]="'确定删除吗?'" (nzOnConfirm)="deleteRow(data)">
+        <a nz-popconfirm  title="删除"><i nz-icon type="delete"></i></a>
+      </nz-popconfirm>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>
+
+<!--点击详情弹出的模态窗口-->
+<nz-modal nzWrapClassName="vertical-center-modal" [(nzVisible)]="visible" [nzTitle]="title"
+          (nzOnCancel)="handleCancel1()" (nzOnOk)="addInsurance()">
+  <nz-checkbox-wrapper style="width: 100%;">
+    <div nz-row>
+      <div nz-col nzSpan="14" style="margin-bottom: 3px">
+        <label class="label">保险名称：</label>
+        <input type="text" nz-input [(ngModel)]="insuranceGroup.name" [disabled]="false"/>
+      </div>
+      <div nz-col nzSpan="14" style="margin-bottom: 3px">
+        <label class="label">投保人：</label>
+        <input type="text" nz-input [(ngModel)]="insuranceGroup.insPerson" [disabled]="false"/>
+      </div>
+      <div nz-col nzSpan="14" style="margin-bottom: 3px">
+        <label class="label">投保日期：</label><br/>
+        <nz-date-picker style="width: 185px" [(ngModel)]="insuranceGroup.insDate"></nz-date-picker>
+      </div>
+      <div nz-col nzSpan="14" style="margin-bottom: 3px">
+        <label class="label">投保对象：</label>
+        <input type="text" nz-input [(ngModel)]="insuranceGroup.target" [disabled]="false"/>
+      </div>
+      <div nz-col nzSpan="14" style="margin-bottom: 3px">
+        <label class="label">到期时间：</label><br/>
+        <nz-date-picker style="width: 185px" [(ngModel)]="insuranceGroup.endDate"></nz-date-picker>
+      </div>
+      <div nz-col nzSpan="14" style="margin-bottom: 3px">
+        <label class="label">备注：</label>
+        <input type="text" nz-input [(ngModel)]="insuranceGroup.remarks" [disabled]="false"/>
+      </div>
+    </div>
+  </nz-checkbox-wrapper>
+</nz-modal>
+
+
+<nz-modal nzWrapClassName="vertical-center-modal" [(nzVisible)]="isVisible" [nzTitle]="title"
+          (nzOnCancel)="handleCancel()" (nzOnOk)="setInsurance()">
+  <nz-checkbox-wrapper style="width: 100%;" >
+    <div nz-row>
+      <div nz-col nzSpan="14" style="margin-bottom: 3px">
+        <label class="label">保险名称：</label>
+        <input type="text" nz-input [(ngModel)]="insuranceMessage.name" [disabled]="false"/>
+      </div>
+      <div nz-col nzSpan="14" style="margin-bottom: 3px">
+        <label class="label">投保人：</label>
+        <input type="text" nz-input [(ngModel)]="insuranceMessage.insPerson" [disabled]="false"/>
+      </div>
+      <div nz-col nzSpan="14" style="margin-bottom: 3px">
+        <label class="label">投保日期：</label><br/>
+        <nz-date-picker style="width: 185px" [(ngModel)]="insuranceMessage.insDate"></nz-date-picker>
+      </div>
+      <div nz-col nzSpan="14" style="margin-bottom: 3px">
+        <label class="label">投保对象：</label>
+        <input type="text" nz-input [(ngModel)]="insuranceMessage.target" [disabled]="false"/>
+      </div>
+      <div nz-col nzSpan="14" style="margin-bottom: 3px">
+        <label class="label">到期时间：</label><br/>
+        <nz-date-picker style="width: 185px" [(ngModel)]="insuranceMessage.endDate"></nz-date-picker>
+      </div>
+      <div nz-col nzSpan="14" style="margin-bottom: 3px">
+        <label class="label">备注：</label>
+        <input type="text" nz-input [(ngModel)]="insuranceMessage.remarks" [disabled]="false"/>
+      </div>
+    </div>
+  </nz-checkbox-wrapper>
+</nz-modal>

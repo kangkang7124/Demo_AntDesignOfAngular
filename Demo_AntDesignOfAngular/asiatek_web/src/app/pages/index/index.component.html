@@ -1,0 +1,55 @@
+<nz-layout>
+  <nz-sider
+    nzCollapsible
+    [(nzCollapsed)]="isCollapsed"
+    [nzTrigger]="triggerTemplate"
+  >
+    <div style="text-align: center; margin: 20px 0;">
+      <a [routerLink]="['/index']" routerLinkActive="router-link-active">
+        <img src="../assets/image/logo.png" style="width:50px;"
+      /></a>
+    </div>
+    <app-menu-controller
+      [menuCollapsed]="isCollapsed"
+      [menu]="menuList"
+      [activedMenuId]="activedMenu.id"
+      (menuOutputEmit)="activeMenuItem($event)"
+    ></app-menu-controller>
+  </nz-sider>
+  <nz-layout>
+    <nz-header style="background: #fff; padding:0;">
+      <div
+        style="display: flex; flex-direction: row;justify-content:space-between;"
+      >
+        <div>
+          <i
+            class="trigger"
+            nz-icon
+            [type]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+            (click)="this.isCollapsed = !this.isCollapsed"
+          ></i>
+        </div>
+        <div>
+          <a
+            style="font-size: 1.2em; text-decoration:none; color: #000; margin: 0px 20px;"
+            title="退出"
+          >
+            <i nz-icon type="logout" (click)="logout()" theme="outline"></i>
+          </a>
+        </div>
+      </div>
+    </nz-header>
+    <nz-content style=" margin: 0px 25px; min-height: 520px;">
+      <nz-breadcrumb [nzAutoGenerate]="true">
+        <nz-breadcrumb-item>当前位置：</nz-breadcrumb-item>
+      </nz-breadcrumb>
+      <div style="background:#fff;  min-height: 320px;">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+    <nz-footer style="text-align: center;">
+      <app-footer-controller></app-footer-controller>
+    </nz-footer>
+  </nz-layout>
+</nz-layout>
+<ng-template #trigger> <i nz-icon type="up"></i> </ng-template>

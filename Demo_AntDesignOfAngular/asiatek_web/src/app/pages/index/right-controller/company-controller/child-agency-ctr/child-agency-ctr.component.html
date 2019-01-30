@@ -1,0 +1,107 @@
+<div style="margin-bottom: 16px;">
+  <button nz-button [nzType]="'primary'" routerLink="/index/newagency/{{parentId}}">新增</button>
+</div>
+<nz-table
+  #rowSelectionTable
+  nzBordered
+  [nzData]="dataSet"
+>
+  <thead>
+  <tr>
+    <th nzShowCheckbox [(nzChecked)]="allChecked" [nzIndeterminate]="indeterminate"></th>
+    <th hidden>ID</th>
+    <th>公司/工地</th>
+    <th>地址</th>
+    <th>负责人</th>
+    <th>负责人手机号</th>
+    <th>固定电话</th>
+    <th>邮编</th>
+    <th>传真</th>
+    <th>操作</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of rowSelectionTable.data">
+    <td nzShowCheckbox [(nzChecked)]="data.checked" (nzCheckedChange)="refreshStatus()"></td>
+    <td hidden>{{data.id}}</td>
+    <td>{{data.name}}</td>
+    <td>{{data.address}}</td>
+    <td>{{data.dutyPerson}}</td>
+    <td>{{data.mobile}}</td>
+    <td>{{data.phone}}</td>
+    <td>{{data.zipCode}}</td>
+    <td>{{data.fax}}</td>
+    <td>
+      <a (click)="showInfo(data)">详情</a>&nbsp;&nbsp;
+      <nz-popconfirm [nzTitle]="'确定删除吗?'" (nzOnConfirm)="deleteRow(data.id)">
+        <a nz-popconfirm>删除</a>
+      </nz-popconfirm>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>
+
+
+<!--点击详情弹出的模态窗口-->
+<nz-modal nzWrapClassName="vertical-center-modal" [(nzVisible)]="isVisible" [nzTitle]="title" (nzOnCancel)="handleCancel()" (nzOnOk)="handleCancel()">
+  <nz-checkbox-wrapper style="width: 100%;">
+    <div nz-row>
+      <div nz-col nzSpan="12" style="margin-bottom: 3px">
+        <label class="label">公司全称：</label>&nbsp;&nbsp;
+        <input type="text" nz-input [(ngModel)]="modelData.name" [disabled]="true"/>
+      </div>
+      <div nz-col nzSpan="12" style="margin-bottom: 3px">
+        <label>简称：</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="text" nz-input [(ngModel)]="modelData.shortName" [disabled]="true"/>
+      </div>
+      <div nz-col nzSpan="12" style="margin-bottom: 3px">
+        <label>英文名称：</label>&nbsp;&nbsp;
+        <input type="text" nz-input [(ngModel)]="modelData.enName" [disabled]="true"/>
+      </div>
+      <div nz-col nzSpan="12" style="margin-bottom: 3px">
+        <label>公司地址：</label>&nbsp;&nbsp;
+        <input type="text" nz-input [(ngModel)]="modelData.address" [disabled]="true"/>
+      </div>
+      <div nz-col nzSpan="12" style="margin-bottom: 3px">
+        <label>公司负责人：</label>
+        <input type="text" nz-input [(ngModel)]="modelData.dutyPerson" [disabled]="true"/>
+      </div>
+      <div nz-col nzSpan="12" style="margin-bottom: 3px">
+        <label>负责人手机号：</label>
+        <input type="text" nz-input [(ngModel)]="modelData.mobile" [disabled]="true"/>
+      </div>
+      <div nz-col nzSpan="12" style="margin-bottom: 3px">
+        <label>固定电话：</label>&nbsp;&nbsp;
+        <input type="text" nz-input [(ngModel)]="modelData.phone" [disabled]="true"/>
+      </div>
+      <div nz-col nzSpan="12" style="margin-bottom: 3px">
+        <label>传真：</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="text" nz-input [(ngModel)]="modelData.fax" [disabled]="true"/>
+      </div>
+      <div nz-col nzSpan="12" style="margin-bottom: 3px">
+        <label>邮编：</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="text" nz-input [(ngModel)]="modelData.zipCode" [disabled]="true"/>
+      </div>
+      <div nz-col nzSpan="12" style="margin-bottom: 3px">
+        <label>创建人：</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="text" nz-input [(ngModel)]="modelData.createBy" [disabled]="true"/>
+      </div>
+      <div nz-col nzSpan="12" style="margin-bottom: 3px">
+        <label>创建时间：</label>&nbsp;&nbsp;
+        <input type="text" nz-input [(ngModel)]="modelData.createDate" [disabled]="true"/>
+      </div>
+      <div nz-col nzSpan="12" style="margin-bottom: 3px">
+        <label>更新人：</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="text" nz-input [(ngModel)]="modelData.updateBy" [disabled]="true"/>
+      </div>
+      <div nz-col nzSpan="12" style="margin-bottom: 3px">
+        <label>更新时间：</label>&nbsp;&nbsp;
+        <input type="text" nz-input [(ngModel)]="modelData.updateDate" [disabled]="true"/>
+      </div>
+      <div nz-col nzSpan="12" style="margin-bottom: 3px">
+        <label>备注：</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="text" nz-input [(ngModel)]="modelData.remarks" [disabled]="true"/>
+      </div>
+    </div>
+  </nz-checkbox-wrapper>
+</nz-modal>

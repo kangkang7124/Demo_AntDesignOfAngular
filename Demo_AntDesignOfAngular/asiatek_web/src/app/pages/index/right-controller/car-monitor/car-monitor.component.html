@@ -1,0 +1,18 @@
+<div style="width: 100%">
+  <input type="text" nz-input placeholder="请输入终端号" [(ngModel)]="searchValue" >
+  <button nz-button [nzType]="'primary'" (click)="search()">搜索</button>
+  <button nz-button [nzType]="buttonType" (click)="showWarningLog()" style="margin-left: 8px;margin-right: 8px">报警记录<i *ngIf="buttonType == 'danger'" nz-icon type="warning"></i></button>
+  <nz-switch title="消息监控开关" [(ngModel)]="switchValue" [nzControl]="true" (click)="clickSwitch()" [nzLoading]="loading" nzCheckedChildren="开" nzUnCheckedChildren="关"></nz-switch>
+</div>
+
+<div id="container" class="mapContainer" [ngStyle]="{'height.px': mapHeight}"></div>
+
+<nz-modal nzWrapClassName="monitor-modal" [(nzVisible)]="monitorVisible" nzTitle="报警记录" [nzFooter]="monitorFooter" nzMaskClosable="false" nzClosable="false" nzKeyboard="false">
+  <div #webSocketMessageDiv style="padding: 5px 25px 5px 25px;height: 400px;overflow: auto;word-wrap:break-word;font-size: 14px;">
+  </div>
+  <ng-template #monitorFooter>
+    <button nz-button nzType="default" (click)="clear()">清空</button>
+    <button nz-button nzType="primary" (click)="save()">保存</button>
+    <button nz-button nzType="primary" (click)="handleCancel()">隐藏</button>
+  </ng-template>
+</nz-modal>

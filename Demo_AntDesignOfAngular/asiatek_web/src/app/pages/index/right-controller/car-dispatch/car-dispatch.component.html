@@ -1,0 +1,32 @@
+<div id="toppart">
+  <div id="company1">
+    <nz-select (ngModelChange)="factory1($event)" style="width: 250px;" nzShowSearch nzAllowClear nzPlaceHolder="厂地" [(ngModel)]="selectedFactory1">
+      <nz-option *ngFor="let data of leftfactory" nzCustomContent nzLabel="{{data.name}}" nzValue="{{data.id}}"><i nz-icon></i>{{data.name}}</nz-option>
+    </nz-select>
+  </div>
+  <div id="transfer">
+    <nz-transfer
+      [nzDataSource]="list"
+      [nzDisabled]="disabled"
+      [nzOperations]="['移动到右边', '移动到左边']"
+      [nzRender]="render"
+      [nzFooter]="footer"
+      [nzListStyle]="{'width.px': 250, 'height.px': 300}"
+      [nzTitles]="['自编号-车牌号','自编号-车牌号']"
+      (nzSelectChange)="select($event)"
+      (nzChange)="change($event)">
+      <ng-template #render let-item>
+        {{ item.title }}-{{ item.description }}
+      </ng-template>
+      <ng-template #footer let-direction>
+        <button nz-button (click)="save()" [nzSize]="'small'" style="float: right; margin: 5px;">保存</button>
+      </ng-template>
+    </nz-transfer>
+  </div>
+  <div id="company2">
+      <nz-select style="width: 250px;" nzShowSearch nzAllowClear nzPlaceHolder="厂地" [(ngModel)]="selectedFactory2">
+      <nz-option *ngFor="let data of righfactory" nzCustomContent nzLabel="{{data.name}}" [nzValue]="data"><i nz-icon></i>{{data.name}}</nz-option>
+    </nz-select>
+  </div>
+</div>
+

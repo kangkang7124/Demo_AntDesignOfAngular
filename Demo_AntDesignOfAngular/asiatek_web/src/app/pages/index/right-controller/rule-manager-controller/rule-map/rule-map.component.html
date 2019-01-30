@@ -1,0 +1,49 @@
+<nz-modal
+  [nzStyle]="{ top: '20px' }"
+  [(nzVisible)]="isCloseModle"
+  nzTitle="自定义区域"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+  nzWidth="80%"
+>
+  <div class="rule-map-edit">
+    <div class="fence-list"><app-fence-list></app-fence-list></div>
+    <div class="map-view">
+      <div class="draw-type-select">
+        <div>
+          <button nz-button (click)="drawGraph((drawType = 'point'))">
+            点
+          </button>
+          <button nz-button (click)="drawGraph((drawType = 'line'))">线</button>
+          <nz-dropdown>
+            <button nz-button nz-dropdown>
+              <span>面</span> <i nz-icon type="down"></i>
+            </button>
+            <ul nz-menu>
+              <li nz-menu-item>
+                <a (click)="drawGraph((drawType = 'circle'))">圆</a>
+              </li>
+              <li nz-menu-item>
+                <a (click)="drawGraph((drawType = 'polygon'))">多边形</a>
+              </li>
+              <li nz-menu-item>
+                <a (click)="drawGraph((drawType = 'rectangle'))">矩形</a>
+              </li>
+            </ul>
+          </nz-dropdown>
+        </div>
+        <div>
+            <nz-input-group [nzSuffix]="suffixIconButton">
+              <input id="tipinput" type="text" nz-input placeholder="输入位置" />
+            </nz-input-group>
+          </div>
+      </div>
+      <div id="map-container"></div>
+    </div>
+  </div>
+</nz-modal>
+<ng-template #suffixIconButton>
+  <button nz-button nzType="primary" nzSearch>
+    <i nz-icon type="search"></i>
+  </button>
+</ng-template>

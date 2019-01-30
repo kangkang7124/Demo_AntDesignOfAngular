@@ -1,0 +1,77 @@
+<div class="edit-form-div">
+  <div class="schema-div">
+    <div>
+      <sf
+        #sf
+        [schema]="schema"
+        [formData]="formData"
+        [ui]="ui"
+        [layout]="layout"
+        (formSubmit)="submit($event)"
+        (formChange)="change($event)"
+        (formError)="error($event)"
+      >
+      </sf>
+      <div>
+        <div *ngIf="showAddInput" class="add-input-group">
+          <div nz-col>
+            <label>类型:</label>
+            <nz-select
+              style="width: 18em;"
+              [(ngModel)]="selectedValue"
+              nzPlaceHolder="请选择类型"
+            >
+              <nz-option
+                *ngFor="let option of optionList"
+                [nzValue]="option.value"
+                [nzLabel]="option.label"
+              ></nz-option>
+            </nz-select>
+          </div>
+          <div nz-col>
+            <label>label:</label
+            ><input
+              nz-input
+              type="text"
+              placeholder="label"
+              nzSize="default"
+              [(ngModel)]="formTitle"
+            />
+          </div>
+          <div nz-col>
+            <label>属性值:</label
+            ><input
+              nz-input
+              type="text"
+              placeholder="属性值"
+              nzSize="default"
+              [(ngModel)]="formAttribute"
+            />
+          </div>
+        </div>
+        <div class="add-btn-group">
+          <div style="margin-right: 1.5em;">
+            <button
+              nz-button
+              (click)="showAddInput = !showAddInput"
+              nzType="dashed"
+            >
+              {{ showAddInput ? "取消" : "添加" }}
+            </button>
+          </div>
+          <div *ngIf="showAddInput">
+            <button nz-button (click)="addschema()" nzType="primary">
+              添加
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="edit-div">
+    <app-ace-editor
+      (schemaChenge)="schemaChenged($event)"
+      [(codeSchema)]="schema"
+    ></app-ace-editor>
+  </div>
+</div>

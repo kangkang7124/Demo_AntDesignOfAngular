@@ -1,0 +1,26 @@
+<div class="ruleGroup">
+  <div *ngFor="let rule of rules">
+    <button nz-button nzSize="large" nz-popover nzPlacement="top" nzTitle="{{rule.name}}" [nzContent]="contentTemplate"
+      (mouseover)='ruleGroup=rule' nzType="dashed" nzShape="circle">
+      <i nz-icon [iconfont]="rule.icon"></i></button>
+  </div>
+  <button nz-button nzSize="large" nzType="dashed" nzShape="circle" title='添加规则组' (click)="addRule()"><i nz-icon type="plus"
+      theme="outline"></i></button>
+  <app-rule-operation [(addModalVisible)]="isVisible" [(myOptionName)]="optionName" [(modifyRuleGroup)]="modifyRuleGroup"></app-rule-operation>
+</div>
+<div>
+  <app-rule-list></app-rule-list>
+</div>
+<ng-template #contentTemplate>
+  <div>
+    <p>描述：{{ruleGroup.description}}</p>
+    <div style="display: flex; flex-direction: row; align-content: flex-end;">
+      <div>
+        <button nz-button nzSize="small" nzType="primary" (click)="modifyRule(ruleGroup)">修改</button>
+      </div>
+      <div style="margin-left: 0.5em">
+        <button nz-button nzSize="small" nzType="danger" (click)="delete(ruleGroup)">删除</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,83 @@
+<input type="text" nz-input placeholder="请输入查找内容" [(ngModel)]="searchValue">
+<button nz-button [nzType]="'primary'" (click)="search()" [disabled]="searchDisabled">搜索</button>&nbsp;
+<button nz-button [nzType]="'primary'" (click)="fresh()" [disabled]="freshDisabled">刷新</button>
+<nz-spin [nzSpinning]="isSpinning" nzTip='加载中...' [nzSize]="'large'">
+  <nz-table #nzTable [nzData]="displayData" nzShowSizeChanger [nzTotal]="total" [nzShowTotal]="totalTemplate" nzShowQuickJumper>
+    <thead>
+    <tr>
+      <th>单位名称</th>
+      <th>车牌号</th>
+      <th>车架号</th>
+      <th>终端号</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of nzTable.data">
+      <td>{{data.companyName}}</td>
+      <td>{{data.licencePlate}}</td>
+      <td>{{data.vehicleVin}}</td>
+      <td>{{data.terminalId}}</td>
+      <td>
+        <a (click)="showParamQueryModel(data)">终端参数查询</a>&nbsp;&nbsp;
+        <a (click)="showParamSetModel(data)">终端参数设置</a>&nbsp;&nbsp;
+        <a (click)="showSendTextModel(data)">下发文本消息</a>&nbsp;&nbsp;
+        <a (click)="showAttributesQueryModel(data)">终端属性查询</a>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+  <ng-template #totalTemplate let-total>
+    共 {{total}} 条
+  </ng-template>
+</nz-spin>
+
+<nz-modal nzWrapClassName="attributes-modal" [(nzVisible)]="attributesVisible" [nzTitle]="title" [nzFooter]="attributesFooter"  nzMaskClosable="false" nzClosable="false" nzKeyboard="false">
+  <form nz-form>
+    <nz-form-item *ngFor="let a of attributesData">
+      <nz-form-label [nzSpan]="5">{{a.text}}</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <input nz-input [(ngModel)]="a.value" name="{{a.name}}" disabled style="width: 460px">
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+  <ng-template #attributesFooter>
+    <button nz-button nzType="default" (click)="handleCancel(handleType)" [disabled]="isOkDisabled">返回</button>
+    <button nz-button nzType="primary" (click)="handleOk(handleType)" [nzLoading]="isOkLoading">{{submitText}}</button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="textVisible" [nzTitle]="title" [nzFooter]="textFooter"  nzMaskClosable="false" nzClosable="false" nzKeyboard="false">
+  <span>消息类型 :</span>
+  <nz-radio-group [(ngModel)]="textData.type">
+    <label nz-radio [ngStyle]="textStyle" [nzValue]="t.value" *ngFor="let t of textType">{{t.text}}</label>
+    <br/><textarea rows="4" style="width: 470px" nz-input [(ngModel)]="textData.text" placeholder="请在此输入"></textarea>
+  </nz-radio-group>
+  <ng-template #textFooter>
+    <button nz-button nzType="default" (click)="handleCancel(handleType)" [disabled]="isOkDisabled">返回</button>
+    <button nz-button nzType="primary" (click)="handleOk(handleType)" [nzLoading]="isOkLoading">{{submitText}}</button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal nzWrapClassName="param-modal" [(nzVisible)]="isVisible" [nzTitle]="title" [nzFooter]="paramFooter" nzMaskClosable="false" nzClosable="false" nzKeyboard="false">
+  <nz-checkbox-wrapper style="width: 100%;" (nzOnChange)="getIds($event)">
+    <div nz-row>
+      <div nz-col nzSpan="12" style="margin-bottom: 3px" *ngFor="let param of paramList">
+        <label nz-checkbox [nzValue]="param.id" [nzDisabled]="param.checkDisabled" [(ngModel)]="param.checked">{{param.label}}</label>
+        <nz-input-number *ngIf="param.type == 'num'" [(ngModel)]="param.value" [nzMin]="0" [nzStep]="1" [disabled]="param.inputDisabled" [nzParser]="parserNumber"></nz-input-number>
+        <nz-input-number *ngIf="param.type == 'decimal'" [(ngModel)]="param.value" [nzMin]="0" [nzStep]="1" [disabled]="param.inputDisabled"></nz-input-number>
+        <nz-select *ngIf="param.type == 'select'" style="width: 200px;" [(ngModel)]="param.value" [nzDisabled]="param.inputDisabled">
+          <nz-option nzValue="{{c.value}}" nzLabel="{{c.label}}" *ngFor="let c of colorData"></nz-option>
+        </nz-select>
+        <input *ngIf="param.type == 'str'" type="text" nz-input [(ngModel)]="param.value" [disabled]="param.inputDisabled"/>
+      </div>
+    </div>
+  </nz-checkbox-wrapper>
+  <ng-template #paramFooter>
+    <button nz-button nzType="default" (click)="handleCancel(handleType)" [disabled]="isOkDisabled">返回</button>
+    <button nz-button nzType="primary" (click)="fullSelected()" [ngStyle]="showStyle" [disabled]="isOkDisabled">全选</button>
+    <button nz-button nzType="primary" (click)="noneSelected()" [ngStyle]="showStyle" [disabled]="isOkDisabled">全不选</button>
+    <button nz-button nzType="primary" (click)="clearAll()" [ngStyle]="hideStyle" [disabled]="isOkDisabled">清空</button>
+    <button nz-button nzType="primary" (click)="handleOk(handleType)" [nzLoading]="isOkLoading">{{submitText}}</button>
+  </ng-template>
+</nz-modal>

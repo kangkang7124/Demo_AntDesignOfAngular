@@ -1,0 +1,14 @@
+<ace-editor
+  [(text)]="code"
+  [mode]="'json'"
+  [theme]="'chrome'"
+  [autoUpdateContent]="true"
+  (textChanged)="onChange($event)"
+  style="min-height: 30em; width:100%; overflow: auto;"
+  #editor
+  [readOnly]="false"
+>
+</ace-editor>
+<div class="btnGroup">
+  <button style="margin-right: 0.3em;" nz-button nzType="dashed" (click)="onChengeCode()">预览</button>
+</div>

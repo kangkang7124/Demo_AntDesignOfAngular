@@ -1,0 +1,84 @@
+<div nz-row [nzGutter]="24">
+  <div nz-col [nzSpan]="24">
+    时间范围：
+    <nz-range-picker style="margin-right: 8px" [nzRanges]="ranges" nzShowTime nzFormat="yyyy/MM/dd HH:mm:ss" [(ngModel)]="searchValue.dateRange"></nz-range-picker>
+    ICCID：
+    <input nz-input style="margin-right: 8px" placeholder="请输入ICCID" [(ngModel)]="searchValue.iccid" maxlength="20">
+    SIM：
+    <input nz-input style="margin-right: 8px;width: 150px" placeholder="请输入SIM" [(ngModel)]="searchValue.sim" maxlength="13">
+    厂商：
+    <nz-select [(ngModel)]="searchValue.manufacturerId" style="margin-right: 8px;width: 150px">
+      <nz-option nzValue="0" nzLabel="全部"></nz-option>
+      <nz-option *ngFor="let key of getKeys(simManufacturer)" nzValue="{{key}}" nzLabel="{{simManufacturer[key]}}"></nz-option>
+    </nz-select>
+    <button nz-button [nzType]="'primary'" (click)="search()" style="margin-right: 8px" [disabled]="isOkDisabled">查询</button>
+    <button nz-button [nzType]="'primary'" (click)="delete()" [disabled]="isOkDisabled">删除</button>
+  </div>
+</div>
+<nz-table #iccidTable [nzFrontPagination]="false" [nzLoading]="loading" [nzPageIndex]="searchValue.pageNum" [nzPageSize]="searchValue.pageSize" [nzTotal]="total" [nzData]="dataSet" (nzPageIndexChange)="pageIndexChange($event)" [nzShowTotal]="totalTemplate" nzShowQuickJumper>
+  <thead>
+  <tr>
+    <th nzShowCheckbox [(nzChecked)]="allChecked" (nzCheckedChange)="checkAll($event)"></th>
+    <th>ICCID</th>
+    <th>SIM</th>
+    <th>厂商</th>
+    <th>创建时间</th>
+    <th>操作</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of iccidTable.data">
+    <td nzShowCheckbox [(nzChecked)]="data.checked" (nzCheckedChange)="changeChecked($event, data.id)"></td>
+    <td>{{data.iccid}}</td>
+    <td>{{data.sim}}</td>
+    <td>{{simManufacturer[data.manufacturerId]}}</td>
+    <td>{{data.createDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+    <td>
+      <a (click)="showEditModel(data)">编辑</a>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>
+<ng-template #totalTemplate let-total>
+  共 {{total}} 条
+</ng-template>
+<button nz-button nzType="dashed" nzBlock (click)="showAddModel()"><i nz-icon type="plus"></i>新增ICCID</button>
+<nz-modal [(nzVisible)]="editVisible" nzTitle="ICCID编辑" [nzFooter]="editFooter" nzMaskClosable="false" nzClosable="false" nzKeyboard="false">
+  <form nz-form [nzLayout]="'horizontal'" [formGroup]="validateForm">
+    <input hidden formControlName="id" name="id">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="5" nzRequired>ICCID</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzHasFeedback>
+        <input nz-input style="width: 300px" formControlName="iccid" name="iccid">
+        <nz-form-explain *ngIf="validateForm.get('iccid').dirty&&validateForm.get('iccid').errors">
+          <ng-container>
+            请输入正确的iccid号码!
+          </ng-container>
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="5" nzRequired>SIM</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzHasFeedback>
+        <input nz-input style="width: 300px" formControlName="sim" name="sim">
+        <nz-form-explain *ngIf="validateForm.get('sim').dirty&&validateForm.get('sim').errors">
+          <ng-container>
+            请输入正确的sim卡号!
+          </ng-container>
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="5" nzRequired>厂商</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <nz-select formControlName="simManufacturer" name="simManufacturer" style="width: 300px">
+          <nz-option *ngFor="let key of getKeys(simManufacturer)" nzValue="{{key}}" nzLabel="{{simManufacturer[key]}}"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+  <ng-template #editFooter>
+    <button nz-button nzType="default" (click)="handleCancel()" [disabled]="isOkDisabled">返回</button>
+    <button nz-button nzType="primary" (click)="handleOk()" [nzLoading]="isOkLoading" [disabled]="validateDisabled">保存</button>
+  </ng-template>
+</nz-modal>

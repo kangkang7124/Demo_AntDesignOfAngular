@@ -1,0 +1,71 @@
+<form nz-form [formGroup]="searchForm" (ngSubmit)="search()" class="myform">
+  <div nz-row nzGutter="16">
+    <div nz-col nzSpan="6">
+      <input nz-input placeholder="请输入车牌号搜索" formControlName="plateNum">
+    </div>
+    <div nz-col nzSpan="6">
+      <input nz-input placeholder="请输入车架号搜索" formControlName="vehicleVin">
+    </div>
+    <div nz-col nzSpan="6">
+      <nz-select formControlName="carType" nzAllowClear nzPlaceHolder="请选择车辆类型搜索">
+        <nz-option nzValue="1" nzLabel="搅拌车"></nz-option>
+        <nz-option nzValue="11" nzLabel="泵车"></nz-option>
+      </nz-select>
+    </div>
+    <div nz-col nzSpan="6">
+      <input nz-input placeholder="请输入运载量搜索" formControlName="capacity">
+    </div>
+    <div nz-col nzSpan="6" class="secondRow">
+      <input nz-input placeholder="请输入车辆归属搜索" formControlName="ownerName">
+    </div>
+    <div nz-col nzSpan="6" class="secondRow">
+      <input nz-input placeholder="请输入所在厂站搜索" formControlName="transName">
+    </div>
+    <div nz-col nzSpan="6" class="secondRow">
+      <input nz-input placeholder="请输入车辆自编号搜索" formControlName="num">
+    </div>
+    <div nz-col nzSpan="6" class="secondRow">
+      <button nz-button type="submit" nzType="primary">搜索</button>
+      <button nz-button type="button" nzType="dashed" (click)="reset()" style="margin-left: 10px;">重置</button>
+      <button nz-button type="button" nzType="default" (click)="addVehicle()" style="margin-left: 10px;">添加</button>
+    </div>
+  </div>
+</form>
+
+<div class="myform">
+  <nz-table
+  #borderedTable
+  nzBordered
+  [nzData]="datalist"
+  [nzShowQuickJumper]="true">
+  <thead (nzSortChange)="sort($event)" nzSingleSort>
+    <tr>
+      <th nzShowSort nzSortKey="plateNum">车牌号</th>
+      <th nzShowSort nzSortKey="vehicleVin">车架号</th>
+      <th nzShowSort nzSortKey="carType">车辆类型</th>
+      <th nzShowSort nzSortKey="capacity">运载量</th>
+      <th nzShowSort nzSortKey="ownerName">所属公司</th>
+      <th nzShowSort nzSortKey="transName">所在厂站</th>
+      <th nzShowSort nzSortKey="num">自编号</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of borderedTable.data">
+      <td>{{data.plateNum}}</td>
+      <td>{{data.vehicleVin}}</td>
+      <td>{{data.carType == 1 ? '搅拌车' : '泵车'}}</td>
+      <td>{{data.capacity}}</td>
+      <td>{{data.ownerName}}</td>
+      <td>{{data.transName}}</td>
+      <td>{{data.num}}</td>
+      <td>
+        <button nz-button nzType="primary" nzSize="small" title="修改" (click)="showEdit(data.id)"><i nz-icon type="edit"></i></button>
+        <button nz-popconfirm nz-button nzType="danger" nzSize="small" nzTitle="确认要删除此车辆信息吗？" title="删除" style="margin-left: 5px;" nzOkText="确认" nzCancelText="取消" (nzOnConfirm)="deleteVehicle(data.id)" (nzOnCancel)="cancelDelete()"><i nz-icon type="delete"></i></button>
+      </td>
+    </tr>
+  </tbody>
+  </nz-table>
+</div>
+
+<app-vehicle-edit #editModel (refresh)="refresh()"></app-vehicle-edit>

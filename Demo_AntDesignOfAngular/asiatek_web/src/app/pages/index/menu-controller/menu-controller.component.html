@@ -1,0 +1,5 @@
+<ul nz-menu [nzTheme]="'dark'" [nzMode]="'inline'" [nzInlineCollapsed]="menuCollapsed">
+  <ng-container *ngFor="let subMenu of menu">
+    <app-menu-child-controller [child]="subMenu" (menuTitleCollapsed)="menuCollapsed" [activedMenuId]="activedMenuId" (clickEmit)="menuOutputEmit.emit($event)"></app-menu-child-controller>
+  </ng-container>
+</ul>

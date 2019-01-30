@@ -1,0 +1,42 @@
+<nz-layout>
+  <nz-header>
+    <div style="margin: 0;">
+      <span>
+          <img style="width: 15%; " src="./assets/image/logo.png">&nbsp;
+          <label style="font-size:1.8em;">亚士德混凝土后台管理</label>
+      </span>
+    </div>
+  </nz-header>
+  <nz-content>
+    <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+      <nz-form-item>
+        <nz-form-control>
+          <nz-input-group [nzPrefix]="prefixUser">
+            <input type="text" nz-input formControlName="loginName" placeholder="用户名">
+          </nz-input-group>
+          <nz-form-explain *ngIf="validateForm.get('loginName').dirty && validateForm.get('loginName').errors">请输入用户名</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control>
+          <nz-input-group [nzPrefix]="prefixLock">
+            <input type="password" nz-input formControlName="password" placeholder="密码">
+          </nz-input-group>
+          <nz-form-explain *ngIf="validateForm.get('password').dirty && validateForm.get('password').errors">请输入密码</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control>
+          <label nz-checkbox formControlName="rememberMe">
+            <span>记住我</span>
+          </label>
+          <a class="login-form-forgot" class="login-form-forgot">忘记密码</a>
+          <button nz-button class="login-form-button" [nzType]="'primary'">登录</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+    <ng-template #prefixUser><i nz-icon type="user"></i></ng-template>
+    <ng-template #prefixLock><i nz-icon type="lock"></i></ng-template>
+  </nz-content>
+  <nz-footer><app-footer-controller></app-footer-controller></nz-footer>
+</nz-layout>

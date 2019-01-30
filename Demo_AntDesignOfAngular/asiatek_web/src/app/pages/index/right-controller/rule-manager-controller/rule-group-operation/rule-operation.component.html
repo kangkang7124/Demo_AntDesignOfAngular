@@ -1,0 +1,75 @@
+<nz-modal
+  [(nzVisible)]="addModalVisible"
+  [nzTitle]="modalTitle"
+  [nzContent]="modalContent"
+  [nzFooter]="modalFooter"
+  (nzOnCancel)="handleCancel()"
+  [ngClass]="{'new-nz-modal': modalClassSwitch}"
+  [nzWidth]="modalClassSwitch?'90em':'35em'"
+>
+  <ng-template #modalTitle> {{ myOptionName }}规则分类 </ng-template>
+  <ng-template  #modalContent >
+    <div  [ngClass]="{'from-model-content': modalClassSwitch}" >
+      <div [ngClass]="{'rule-group-input': modalClassSwitch}" >
+        <div>
+          <span></span><label>类型名:</label
+          ><input
+            nz-input
+            placeholder="类型名"
+            [(ngModel)]="modifyRuleGroup.name"
+            required
+          />
+        </div>
+        <div>
+          <label>选择图标:</label>
+          <nz-select
+            style="width: 100%;"
+            nzShowSearch
+            nzAllowClear
+            nzPlaceHolder="选择图标"
+            [(ngModel)]="modifyRuleGroup.icon"
+          >
+            <nz-option
+              *ngFor="let icon of icons"
+              [nzCustomContent]="contentTemplate"
+              nzValue="{{ icon.icon }}"
+              nzLabel="{{ icon.name }}"
+              ><i nz-icon [iconfont]="icon.icon"></i>{{ icon.name }}</nz-option
+            >
+          </nz-select>
+        </div>
+        <div>
+          <label>描述:</label>
+          <textarea
+            nz-input
+            placeholder="描述"
+            [(ngModel)]="modifyRuleGroup.description"
+            [nzAutosize]="{ minRows: 2, maxRows: 6 }"
+          ></textarea>
+        </div>
+      </div>
+      <div [ngClass]="{'rule-from-list': modalClassSwitch}">
+          <nz-collapse [nzBordered]="false">
+            <nz-collapse-panel
+              nzHeader="规则详情表单"
+              [nzActive]="collapseActive"
+              (nzActiveChange)="chengeModelCless()"
+            >
+              <app-rule-from></app-rule-from>
+            </nz-collapse-panel>
+          </nz-collapse>
+        </div>
+    </div>
+  </ng-template>
+  <ng-template #modalFooter>
+    <button nz-button nzType="default" (click)="handleCancel()">取消</button>
+    <button
+      nz-button
+      nzType="primary"
+      (click)="handleOk()"
+      [nzLoading]="isConfirmLoading"
+    >
+      确定
+    </button>
+  </ng-template>
+</nz-modal>

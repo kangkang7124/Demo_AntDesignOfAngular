@@ -1,0 +1,56 @@
+<nz-modal [(nzVisible)]="isVisible" nzTitle="{{modelTitle}}" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" [nzOkLoading]="isLoading">
+  <form nz-form [formGroup]="editForm" (ngSubmit)="saveVehicle()">
+    <input type="hidden" formControlName="id" >
+    <div nz-row>
+        <div nz-col class="gutter-row" nzSpan="4">
+          <label>车牌号：</label>
+        </div>
+        <div nz-col class="gutter-row" nzSpan="8">
+            <input nz-input placeholder="请输入车牌号" formControlName="plateNum" >
+        </div>
+        <div nz-col class="gutter-row" nzSpan="4">
+          <label>车架号：</label>
+        </div>
+        <div nz-col class="gutter-row" nzSpan="8">
+            <input nz-input placeholder="请输入车架号" formControlName="vehicleVin" >
+        </div>
+        <div nz-col class="gutter-row" nzSpan="4">
+          <label>车辆类型：</label>
+        </div>
+        <div nz-col class="gutter-row" nzSpan="8">
+          <nz-select formControlName="carType" nzPlaceHolder="请选择车辆类型">
+            <nz-option nzValue="1" nzLabel="搅拌车"></nz-option>
+            <nz-option nzValue="11" nzLabel="泵车"></nz-option>
+          </nz-select>
+        </div>
+        <div nz-col class="gutter-row" nzSpan="4">
+          <label>运载方量：</label>
+        </div>
+        <div nz-col class="gutter-row" nzSpan="8">
+            <nz-input-number placeholder="请输入运载方量" formControlName="capacity" nzMin="0" nzMax="999" nzStep="0.1" style="width: 157px;"></nz-input-number>
+        </div>
+        <div nz-col class="gutter-row" nzSpan="4">
+          <label>所属公司：</label>
+        </div>
+        <div nz-col class="gutter-row" nzSpan="20">
+          <nz-select formControlName="ownerId" style="width: 393px;" nzShowSearch nzPlaceHolder="请选择所属公司">
+            <nz-option *ngFor="let data of companyList" nzLabel="{{data.name}}" nzValue="{{data.id}}"></nz-option>
+          </nz-select>
+        </div>
+        <div nz-col class="gutter-row" nzSpan="4">
+          <label>所在厂站：</label>
+        </div>
+        <div nz-col class="gutter-row" nzSpan="20">
+          <nz-select formControlName="transId" style="width: 393px;" nzShowSearch nzPlaceHolder="请选择所在厂站">
+            <nz-option *ngFor="let data of stationList" nzLabel="{{data.name}}" nzValue="{{data.id}}"></nz-option>
+          </nz-select>
+        </div>
+        <div nz-col class="gutter-row" nzSpan="4">
+          <label>自编号：</label>
+        </div>
+        <div nz-col class="gutter-row" nzSpan="8">
+            <nz-input-number placeholder="请输入自编号" formControlName="num" nzMin="1" nzMax="9999" nzStep="1" style="width: 157px;"></nz-input-number>
+        </div>
+    </div>
+  </form>
+</nz-modal>

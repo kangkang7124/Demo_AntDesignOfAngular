@@ -1,0 +1,30 @@
+<nz-table #basicTable [nzData]="dataSet">
+  <thead>
+    <tr>
+      <th>名称
+        <nz-dropdown nzTrigger="click" [nzClickHide]="false" #dropdown>
+          <i nz-icon type="search" class="search-icon" [class.ant-table-filter-open]="dropdown.nzVisible" nz-dropdown></i>
+          <div class="search-filter-dropdown">
+            <input type="text" class="search-input" nz-input placeholder="区域名" [(ngModel)]="searchValue">
+            <button nz-button [nzType]="'primary'" (click)="search()">查询</button>
+          </div>
+        </nz-dropdown>
+      </th>
+      <th>创建者</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of basicTable.data">
+      <td (click)="selectRow(data)">{{ data.name }}</td>
+      <td (click)="selectRow(data)">{{ data.age }}</td>
+      <td>
+        <a (click)="edit(data)">编辑</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <nz-popconfirm [nzTitle]="'确认删除吗?'" (nzOnConfirm)="delete(data)">
+          <a nz-popconfirm>删除</a>
+        </nz-popconfirm>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>

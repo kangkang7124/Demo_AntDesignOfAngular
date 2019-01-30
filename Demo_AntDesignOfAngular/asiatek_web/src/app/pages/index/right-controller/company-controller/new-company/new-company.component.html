@@ -1,0 +1,68 @@
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">公司名称</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback>
+          <input nz-input formControlName="name" type="name" id="name">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="enName">英文名称</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback>
+          <input nz-input formControlName="enName" type="enName" id="enName">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="shortName">简称</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback>
+          <input nz-input formControlName="shortName" type="shortName" id="shortName">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="address">地址</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback>
+          <input nz-input formControlName="address" type="address" id="address">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="dutyPerson">负责人</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback>
+          <input nz-input formControlName="dutyPerson" type="dutyPerson" id="dutyPerson">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="mobile">负责人手机号</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback>
+          <input nz-input formControlName="mobile" type="mobile" id="mobile">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="phone">固定电话</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback>
+          <input nz-input formControlName="phone" type="phone" id="phone">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="zipCode">邮编</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback>
+          <input nz-input formControlName="zipCode" type="zipCode" id="zipCode">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="fax">传真</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback>
+          <input nz-input formControlName="fax" type="fax" id="fax">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="remarks">备注</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <textarea nz-input rows="2" formControlName="remarks" type="remarks" id="remarks"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+  <nz-form-item>
+    <nz-form-control [nzXs]="{span:24}" [nzSm]="{span:20,offset:9}">
+      <button nz-button nzType="primary">取消</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <button nz-button nzType="primary">提交</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>

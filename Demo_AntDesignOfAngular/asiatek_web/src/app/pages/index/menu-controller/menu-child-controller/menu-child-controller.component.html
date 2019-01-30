@@ -1,0 +1,16 @@
+<ng-container *ngIf="child?.children?.length>0">
+    <li nz-submenu>
+        <span title><i nz-icon type="{{child.icon}}"></i><span class="nav-text">{{child.name}}</span></span>
+      <ul>
+        <ng-container *ngFor="let subChild of child.children">
+          <app-menu-child-controller
+            [child]="subChild"
+            (clickEmit)="clickEmit.emit($event)">
+          </app-menu-child-controller>
+        </ng-container>
+      </ul>
+    </li>
+  </ng-container>
+  <ng-container *ngIf="!child.children">
+    <li nz-menu-item [nzSelected]="activedMenuId===child.id" (click)="clickEmit.emit(child)"><a [routerLink]="[child.href]" routerLinkActive="active">{{child.name}}</a> </li>
+  </ng-container>
